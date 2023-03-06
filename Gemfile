@@ -62,4 +62,3 @@ group :production do
 end
 
 gem 'devise'
-
