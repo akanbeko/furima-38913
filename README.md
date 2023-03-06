@@ -2,6 +2,8 @@
 
 | Column             | Type   | Options                   |
 | ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false               |
+| encrypted_password | string | null: false               |
 | email              | string | null: false, unique: true |
 | last_name          | string | null: false               |
 | first_name         | string | null: false               |
@@ -23,7 +25,7 @@ has_many :buys
 | condition_id       | integer    | null: false                    |
 | charges_id         | integer    | null: false                    |
 | area_id            | integer    | null: false                    |
-| send_days          | integer    | null: false                    |
+| days_id            | integer    | null: false                    |
 | price              | integer    | null: false                    |
 
 ### Association
