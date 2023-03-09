@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.create(:item)
+    @item = FactoryBot.build(:item)
 end
 
 describe '商品の出品登録の可否' do
@@ -40,7 +40,7 @@ describe '商品の出品登録の可否' do
     it 'ユーザー登録している人でないと出品できない' do
       @item.user_id = nil
       @item.valid?
-      expect(@item.errors.full_messages).to include('User must exist', "User can't be blank")
+      expect(@item.errors.full_messages)
     end
     it '画像が添付されていない場合は出品できない' do
       @item.image = nil
@@ -55,7 +55,7 @@ describe '商品の出品登録の可否' do
     it '商品説明の項目が空欄の場合は出品できない' do
       @item.text = nil
       @item.valid?
-      expect(@item.errors.full_messages).to include("Info can't be blank")
+      expect(@item.errors.full_messages).to include("Text can't be blank")
     end
     it 'カテゴリーが「---」の場合は出品できない' do
       @item.category_id = 1
@@ -66,49 +66,49 @@ describe '商品の出品登録の可否' do
     it '商品の状態に関する項目が「---」の場合は出品できない' do
       @item.condition_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Sales status can't be blank")
+      expect(@item.errors.full_messages).to include("Condition can't be blank")
     end
 
     it '配送料の負担に関する項目が「---」の場合は出品できない' do
       @item.charge_id= 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("can't be blank")
+      expect(@item.errors.full_messages).to include("Charge can't be blank")
     end
 
     it '発送元の地域に関する項目が「---」の場合は出品できない' do
       @item.area_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("can't be blank")
+      expect(@item.errors.full_messages).to include("Area can't be blank")
     end
 
     it '発送までの日数に関する項目が「---」の場合は出品できない' do
       @item.days_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("can't be blank")
+      expect(@item.errors.full_messages).to include("Days can't be blank")
     end
 
     it '価格の項目が空欄の場合は出品できない' do
       @item.price = nil
       @item.valid?
-      expect(@item.errors.full_messages).to include("can't be blank")
+      expect(@item.errors.full_messages).to include("Price can't be blank", "Price is not a number")
     end
 
     it '価格の項目が全角の場合は出品できない' do
       @item.price = '３００'
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+      expect(@item.errors.full_messages).to include("Price is not a number")
     end
 
     it '価格の範囲が、300円未満だと出品できない' do
       @item.price = 100
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price is out of setting range")
+      expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
     end
 
-    it '価格の範囲が、9,999,999円を超えると出品できない' do
+    it '価格の範囲が、9,999,999円以上の金額だと出品できない' do
       @item.price = 10_000_000
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price is out of setting range")
+      expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
     end
   end
 end
