@@ -7,9 +7,6 @@ end
 
 describe '商品の出品登録の可否' do
   context '出品登録ができる場合' do
-    it 'ログインしていれば登録できる' do
-      @item.user_id = 1
-    end
     it '全ての入力事項があれば登録できる' do
       expect(@item).to be_valid
     end
@@ -63,50 +60,55 @@ describe '商品の出品登録の可否' do
     it 'カテゴリーが「---」の場合は出品できない' do
       @item.category_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include('Category can't be blank')
+      expect(@item.errors.full_messages).to include("Category can't be blank")
     end
 
     it '商品の状態に関する項目が「---」の場合は出品できない' do
       @item.condition_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include('Sales status can't be blank')
+      expect(@item.errors.full_messages).to include("Sales status can't be blank")
     end
 
     it '配送料の負担に関する項目が「---」の場合は出品できない' do
       @item.charge_id= 1
       @item.valid?
-      expect(@item.errors.full_messages).to include('Shipping fee status can't be blank')
+      expect(@item.errors.full_messages).to include("shipping fee status can't be blank")
     end
 
     it '発送元の地域に関する項目が「---」の場合は出品できない' do
       @item.area_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include('Prefecture can't be blank')
+      expect(@item.errors.full_messages).to include("Prefecture can't be blank")
     end
 
     it '発送までの日数に関する項目が「---」の場合は出品できない' do
       @item.days_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include('Scheduled delivery can't be blank')
+      expect(@item.errors.full_messages).to include("Scheduled delivery can't be blank")
     end
 
     it '価格の項目が空欄の場合は出品できない' do
       @item.price = nil
       @item.valid?
-      expect(@item.errors.full_messages).to include('Price can't be blank')
+      expect(@item.errors.full_messages).to include("Price can't be blank")
     end
 
     it '価格の項目が全角の場合は出品できない' do
       @item.price = '３００'
       @item.valid?
-      expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters')
+      expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
     end
 
-    it '価格の範囲が、300円未満、10,000,000を超えると出品できない' do
-      @item.price = 299
-      @item.price = 10000000
+    it '価格の範囲が、300円未満だと出品できない' do
+      @item.price = 100
       @item.valid?
-      expect(@item.errors.full_messages).to include('Price is out of setting range')
+      expect(@item.errors.full_messages).to include("Price is out of setting range")
+    end
+
+    it '価格の範囲が、9,999,999円を超えると出品できない' do
+      @item.price = 10_000_000
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price is out of setting range")
     end
   end
 end
