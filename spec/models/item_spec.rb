@@ -38,9 +38,9 @@ describe '商品の出品登録の可否' do
 
   context '出品ができない場合' do
     it 'ユーザー登録している人でないと出品できない' do
-      @item.user_id = nil
+      @item.user = nil
       @item.valid?
-      expect(@item.errors.full_messages)
+      expect(@item.errors.full_messages).to include("User must exist")
     end
     it '画像が添付されていない場合は出品できない' do
       @item.image = nil
