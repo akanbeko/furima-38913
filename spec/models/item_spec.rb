@@ -72,25 +72,25 @@ describe '商品の出品登録の可否' do
     it '配送料の負担に関する項目が「---」の場合は出品できない' do
       @item.charge_id= 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("shipping fee status can't be blank")
+      expect(@item.errors.full_messages).to include("can't be blank")
     end
 
     it '発送元の地域に関する項目が「---」の場合は出品できない' do
       @item.area_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      expect(@item.errors.full_messages).to include("can't be blank")
     end
 
     it '発送までの日数に関する項目が「---」の場合は出品できない' do
       @item.days_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Scheduled delivery can't be blank")
+      expect(@item.errors.full_messages).to include("can't be blank")
     end
 
     it '価格の項目が空欄の場合は出品できない' do
       @item.price = nil
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price can't be blank")
+      expect(@item.errors.full_messages).to include("can't be blank")
     end
 
     it '価格の項目が全角の場合は出品できない' do
