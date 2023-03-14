@@ -48,7 +48,7 @@ has_one :address
 ## addressesテーブル
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | -------------------------------|
-| buy                | references | null: false, foreign_key: true |
+| order              | references | null: false, foreign_key: true |
 | send_number        | string     | null: false                    |
 | area_id            | integer    | null: false                    |
 | city               | string     | null: false                    |
