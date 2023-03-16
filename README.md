@@ -13,7 +13,7 @@
 
 ### Association
 has_many :items
-has_many :buys
+has_many :orders
 
 ## itemsテーブル
 | Column             |Type        | Options                        |
@@ -30,10 +30,10 @@ has_many :buys
 
 ### Association
 belongs_to :user
-has_one :buy
+has_one :order
 
 
-## buysテーブル
+## ordersテーブル
 | Column         |Type        | Options                        |
 | -------------- | ---------- | ------------------------------ |
 | user           | references | null: false, foreign_key: true |
@@ -48,7 +48,7 @@ has_one :address
 ## addressesテーブル
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | -------------------------------|
-| buy                | references | null: false, foreign_key: true |
+| order              | references | null: false, foreign_key: true |
 | send_number        | string     | null: false                    |
 | area_id            | integer    | null: false                    |
 | city               | string     | null: false                    |
@@ -57,4 +57,4 @@ has_one :address
 | phone_number       | string     | null: false                    |
 
 ### Association
-belongs_to :buy
+belongs_to :order
