@@ -10,7 +10,7 @@ class OrderAddress
     validates :area_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :city
     validates :address
-    validates :phone_number, format: { with: /\A[0-9]{11}\z/, message: 'is invalid' }
+    validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid' }
     validates :token
   end
  

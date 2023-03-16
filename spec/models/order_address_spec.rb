@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   describe '配送先に関する情報の保存' do
   before do
-    @order_address = FactoryBot.build(:order_address)
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
   end
 
  
@@ -36,8 +38,12 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.building = nil
         expect(@order_address).to be_valid
       end
-      it '電話番号が10桁以上11桁以下でハイフンなしであれば保存できる' do
-        @order_address.phone_number = 12345678901 || 1234567890
+      it '電話番号が11桁であれば保存できる' do
+        @order_address.phone_number = 12345678901
+        expect(@order_address).to be_valid
+      end
+      it '電話番号が10桁であれば保存できる' do
+        @order_address.phone_number = 1234567890
         expect(@order_address).to be_valid
       end
     end
@@ -89,8 +95,13 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid')
       end
-      it '電話番号が9桁以下、12桁以上あると保存できない' do
-        @order_address.phone_number = 123456789 || 123456789012
+      it '電話番号が9桁以下だと保存できない' do
+        @order_address.phone_number = 123456789 
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号が12桁以上だと保存できない' do
+        @order_address.phone_number = 123456789012
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid')
       end
@@ -99,6 +110,7 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
       end
+
     end
   end
 end
