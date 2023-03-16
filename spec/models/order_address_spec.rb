@@ -7,7 +7,7 @@ RSpec.describe OrderAddress, type: :model do
   end
 
  
-    context '保存が可能' do
+    context '内容に問題ない場合' do
       it 'すべての値が正しく入力されていれば保存できること' do
         expect(@order_address).to be_valid
       end
@@ -42,7 +42,7 @@ RSpec.describe OrderAddress, type: :model do
       end
     end
 
-    context '保存が不可能' do
+    context '内容に問題がある場合' do
       it 'user_idが空だと保存できない' do
         @order_address.user_id = nil
         @order_address.valid?
@@ -94,7 +94,7 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid')
       end
-      it 'トークンが空だと保存できない' do
+      it 'トークンが空空では登録できない' do
         @order_address.token = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
